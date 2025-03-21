@@ -1,7 +1,7 @@
 import re
 import os
 
-def convertir_obsidian_a_md(archivo_md, carpeta_imagenes="https://github.com/MartinLopezDeIpina/TFG_apuntes/Imagenes/blob/master"):
+def convertir_obsidian_a_md(archivo_md, carpeta_imagenes="https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes"):
     with open(archivo_md, "r", encoding="utf-8") as f:
         contenido = f.read()
     

@@ -25,7 +25,7 @@ Puedes ser RAG desde Textual QA (sin estructura, Wikipedia, science books...) o 
 - Document retrieval -> Answer Extraction. Se pueden usar IR (infromation retrieval techniques): Boolean model, vector space model (embeddings), Probabilistic model, Language model (genera probs)
 	Mencionan un post-procesado desupés de muchos documentos retrieveados
 - Answer extraction: sacar final answer de los docs
-![[Pasted image 20250224115508.png]]
+![Pasted image 20250224115508.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250224115508.png)
 
 tradicionalmente CNN, LSTM, MRC (machine reading comprehension -> transformers entran aquí)
 Mencionan que se usa RAG en web también -> océano de información pero puede haber mucha información ruidosa.
@@ -38,7 +38,7 @@ Bidaf generaba varios embeddings para documento, con diferentes niveles de granu
 
 ##### Modern QA, Retrieving and Reading
 
-![[Pasted image 20250224124940.png]]
+![Pasted image 20250224124940.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250224124940.png)
 
 Tipos de retrievers: 
 - Sparse retrievers: usan bigramas y así, no interesantes
@@ -48,9 +48,9 @@ Tipos de retrievers:
 	- Representation-interaction Retriever: combina las dos estrategias. Vectorizas los documentos y los query en embeddings pero a nivel de token (un embedding por token). Entonces luego al hacer el RAG va mirando una media de la similitud entre token y token con los querys y los documentos. Mencionan ColBERT-QA que utiliza ColBERT en un dataset de QA. Tiene muy buena pinta, no se hasta que punto degrada la eficiencia, #todo, también se podría mirar un enfoque híbrido de hacer rag normal sobre muchos y luego el colbert sobre pocos, mirar si ya existe -> también existe colbertV2
 	
 
-![[Pasted image 20250224154227.png]]
-![[Pasted image 20250311150135.png]]
-![[Pasted image 20250224154247.png]]
+![Pasted image 20250224154227.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250224154227.png)
+![Pasted image 20250311150135.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250311150135.png)
+![Pasted image 20250224154247.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250224154247.png)
 - Iterative retriever: lo mismo pero con varios pasos en los que se van modificando y añadiendo docs nuevos. Separa en document retriever (los mencionados antes), Query Reformulation (varias técnias, LLMs cabras -> Golden retriever, tiene pinta que los SOTA van mejor que esto), y retrieval stopping mechanism (varias técnicas, mirar SOTA más adelante)
 Post procesado de documentos -> con varias estrategias elegir sólo los importantes, mirar SOTA.
 
@@ -181,10 +181,10 @@ para no pasarle todos los documentos retrieved directametne al LLM
 	 ##### STANDING ON THE SHOULDERS OF GIANT FROZEN LANGUAGE MODELS
 	- Prompt learning: el prompt tunning tradicional solo se puede adaptar para una tarea. Proponen Input-dependent prompt tunning (ID-PT). Se pasa un prompt aprendido por un T5 congelado, el cual se supone que captura representaciones lingüisticas, esto genera salida variable, con unas capas adicionales se crea un prompt de tamaño fijo ajustado a la tarea de x.
 		 
-![[Pasted image 20250227102452.png]] 
+![Pasted image 20250227102452.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250227102452.png) 
 
 - Frozen LLM como reader: Dicen que ajustar un reader suele ser muy costoso (mucho input length) -> suelen ser pequeños. Entonces proponen primero ajustar un reranker para obtener los documentos más útiles solo, y luego aplicar prompt learning sobre un LLM grande para que actue como Reader y genere la respuesta. #todo -> lo del reranker ya se mencionaba en otras estrategias (aquí mencionan también un paper que explica bine como hacerlo), pero se puede probar también a ajustar el input prompt. También entiendo que esto es una forma de combinar el RAG pre vectorizado con una técnica de reducir los documentos, es como combinarlo con lo del colbert, no se si se podría añadir eso también. También se puede aplicar una para cada multi-hop query, y luego con los resultados de cada multi-hop query aplicar uno de estos, como una segunda capa.
-![[Pasted image 20250227103538.png]]
+![Pasted image 20250227103538.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250227103538.png)
 
 - LM Recursion. Proponen ajustar un prompt para un LM grande para que genere la respuesta para una pregunta, samplear varios de este LM y luego ajustar otro prompt para otro LM para que dados estos samples elija o genere la respuesta correcta. 
 - Neural Recursion: dicen que al conectar la salida de uno a la entrada del otro se pierde mucho tiempo de inferencia. Entonces conectan la salida en embeddings de uno con la entrada a la primera capa de atención de la otra, lo llaman Connector -> ambos LM deberían ser el mismo modelo congelado para compatibildiad de embeddings. #interesante, mirar si esto puede caber en algún lado.
@@ -228,7 +228,7 @@ Entrenan un modelo (Llama 7b/13b) end-to-end para que dada una query responda en
 Primero utilizan gpt-4 para obtener datos de entrenamiento. Con diferentes prompts anotan cada uno de los tokenes especiales para varias preguntas / segmentos de texto.
 Con estos datos entrenan un modelo crítico. Este aprende a predecir los tokenes reflectivos especiales.
 Después, se utiliza este modelo Crítico para generar datos para el modelo generador (el bueno). Entonces se va pasando la pregunta y respuesta por el crítico para que este vaya generando los diferentes tokens y los van concatenando a la respuesta:  
-![[Pasted image 20250228172550.png]]
+![Pasted image 20250228172550.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250228172550.png)
 
 Comentan que también pueden triggerear el retrieve si la probabilidad del token retrieve = yes normalizado respecto a todo el output supera un límite.
 Dicen que al usar RAG se extraen k documentos, y que por cada documento se genera en paralelo una traza. Utilizan el beam search usando la siguiente técnica de evaluación: 
@@ -280,15 +280,15 @@ Anotan dataset de prompts útiles para ejemplos de preguntas y respuestas, para 
 #todo, si ajusto embedder mirarme estas estrategias
 Explican varios métodos de pérdida para ajustar el retriever:
 -Attention distillation:Usando un encoder-decoder, pasan el input con los documentos por el encoder. Luego, utilizan la atención promedio del decodificador a cada documetno para determinar la relevancia de cada documento. Utilizan una fórmula para calcular la divergencia kL de la probabilidad retriever (dot product entre documento e input) con la del modelo: 
-![[Pasted image 20250301113006.png]]
-![[Pasted image 20250301112330.png]]
+![Pasted image 20250301113006.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250301113006.png)
+![Pasted image 20250301112330.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250301112330.png)
 -End-to-end training of Multi-Document Reader and Retriever:  Se utiliza la probabilidad que el modelo asigna al output dado un solo documento y el input, el p retr es también el doct product de la estrategia anterior:
-![[Pasted image 20250301112857.png]]
+![Pasted image 20250301112857.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250301112857.png)
 -Perplexity Distillation (PDist): como simplifiación del anterior, la idea es ver x documento cuanto mejora la perplejidad respecto a los demás documentos: 
-![[Pasted image 20250301114031.png]]
+![Pasted image 20250301114031.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250301114031.png)
 Entonces, se hace la divergencia KL entre pk y la probabilidad del retriever p(retr).
 -Leave-one-out Perplexity Distillatio: La idea es ver cuánto empeora la perplejidad del modelo al eliminar cada documento -> ploop(dk):
-![[Pasted image 20250301114329.png]]
+![Pasted image 20250301114329.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250301114329.png)
 Se usa la log-probabilidad negativa para que -logplm(...) sea la relevancia de cada documento y se aplica posteriormente otra vez KL divergencia respecto al score del retriever.
 Comentan que obviamente esta estrategia es más costosa porque tienen que ir computando cada combinación de eliminación de documentos.
 
@@ -303,7 +303,7 @@ Varias técnicas: PRCA, TokenFiltering, RECOMP, PKG
 ##### PRCA: Fitting Black-Box Large Language Models for Retrieval Question Answering via Pluggable Reward-Driven Contextual Adapte
 Interesante pero pinta complicado con el RL.
 Proponen crear un adaptar que dado un query y varios documentos genere el contexto para el generador (como un resumen). Lo entrenan en dos fases, primero un sft con el ground truth. Luego un RL con un LLM de caja negra, para ello definen el reward como el Rouge-L score entre el resultado del LLM y el resultado del ground truth.
-![[Pasted image 20250302180326.png]]
+![Pasted image 20250302180326.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250302180326.png)
 Usan divergencia KL para regularizar el reward, para no desviar demasiado del entrenamiento anterior.
 Usan PPOa quieren aplicarlo a nivel de token pero como LLM de caja negra pues no tienen las probabilidades -> esperan al token EOS, entonces sacan las probablidades del modelo que están entrenando sobre la respuesta dada y entonces ponderan el reward para cada token y aplican el proceso PPO para todos los tokens.
 ##### RECOMP: IMPROVING RETRIEVAL-AUGMENTED LMS WITH COMPRESSION AND SELECTIVE AUGMENTATION
@@ -339,13 +339,13 @@ Se aplica la GNN offline sobre todas las tripletas y luego en inferencia se hace
 Se codifican en tripletas (doc - relación - doc) sin tener en cuenta el orden.
 Mencionan que al hacer teacher forcing para entrenar el generador con los documentos extraídos el generador sólo recibe feedback (datos) del ground truth, sin tener en cuenta los tokens generados durante el entrenamiento e indepndientemente de los documentos que le pasan de contexto (exposure bias).
 Entrenan end-to-end a la vez el retriever (GNN) - embedder de memoria - generador
-![[Pasted image 20250303124857.png]]
+![Pasted image 20250303124857.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303124857.png)
 ~(Z) -> embedding del generador tras salida z
 ~(h) -> representación embedding de retriever apartir del estado h
 Se hace sumatorio sobre representaciones negativas, z y h que no corresponden al par correcto
-![[Pasted image 20250303125007.png]]
+![Pasted image 20250303125007.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303125007.png)
 Para este cogen top k samples: 
-![[Pasted image 20250303125218.png]]
+![Pasted image 20250303125218.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303125218.png)
 ##### SANTA (antes) -> entrenar retriever para structured data
 
 ## Augmentation in RAG
@@ -353,20 +353,20 @@ Para este cogen top k samples:
 - En fase de preentrenamiento: todo lo de aquí entiendo que no me sirve pal TFG porque no me voy a poner a preentrenar un modelo. 
 ##### REALM: Retrieval-Augmented Language Model Pre-Training
 Tratan los docs z como variable latente:
-![[Pasted image 20250303140323.png]]
+![Pasted image 20250303140323.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303140323.png)
 Se junta el retriever al transformer generador y se calcula el loss de forma conjunta tanto en preentrenamiento y ajuste fino. En pre lo que hacen es como en bert preecir token que falta, en ajuste fino lo que se predice es el rsultado. Utilizan MIPS (multiplicar los vectores) y aplican softmax -> el bakcpropagation se hace solo sobre los top k docs pa q no sea demasiado costoso.
 ##### Improving Language Models by Retrieving from Trillions of Tokens
 Preentrenan un modelo junto a una BD para que haga retrieval automativamente. Se separa el input en chunks y por cada chunk se extraen top k doucmentos relevantes, que se integran en el sistema de atención dentro del propio modelo: 
-![[Pasted image 20250303133134.png]]
+![Pasted image 20250303133134.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303133134.png)
 Es una fumada, habría que mirarlo con más tiempo pero no me va a servir.
 
 - Fase de ajuste fino: REPLUG y UPRISE ajustan el retriever. Self-Mem y Self-RAG ajustan el generador. Estos ajustan los dos, SURGE también entrena ambos, en GNN:
 ##### RA-DIT: RETRIEVAL-AUGMENTED DUAL INSTRUCTION TUNING
 Entrenan un retriever y un generador. Dicen que el generador aprende a ignorar los documentos irrelevantes o erróneos.
 Para el generador usan SFT con los docs, para el retriever usan el loss de dividir la probabilidad de y con ese documento en relación a los demás (como en la mayoría): 
-![[Pasted image 20250303163335.png]]
+![Pasted image 20250303163335.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303163335.png)
 Calcuar respecto al ground truth KL:
-![[Pasted image 20250303163558.png]]
+![Pasted image 20250303163558.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250303163558.png)
 Dicen que funciona mejor que replug, pero claro están ajustando el generador también.
 
 - En inferencia: DSP comunica LLM frozen con retriever, en plan qué pasarle como contexto. PKG lo de generar documentos con SLM. Recite lo de que los propios LLMs reciten su info.

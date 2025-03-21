@@ -8,22 +8,22 @@ El DQN daba el problema de que era muy inestable -> hay que limitar lo que se ap
 En el TPRO proponían con KL, funcionaba pero era muy costoso.
 
 En PPO se utiliza el clip que limita lo que puede aprender:
-![[Pasted image 20250123104653.png]]
+![Pasted image 20250123104653.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250123104653.png)
 
 Se maximiza el rendimiento de la política nueva πθ minimizando los posibles cambios. 
 
 Dentro del clip, está la relación entre la política nueva multiplicado por la ventaja (qué tan bueno es esta acción respecto al valor esperado de la política actual). Entonces se elige el mínimo entre eso y el clip con epsilon por la ventaja.
-![[Pasted image 20250123105154.png]]
-![[Pasted image 20250123105426.png]]
+![Pasted image 20250123105154.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250123105154.png)
+![Pasted image 20250123105426.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250123105426.png)
 
 Entonces de esta forma si A es mayor a 0 se aumenta un poco, pero si A es < 0 se penaliza bastante. De esta forma penalizamos mucho los errores pero estamos cautos pq q un episodio sea bueno no significa que todos vayan a ser así.
-![[Pasted image 20250123105511.png]]
+![Pasted image 20250123105511.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250123105511.png)
 
 ### Group Relative Policy Optimization
 
 Es lo mismo que PPO pero en grupos en lugar de con ejemplos individuales, y aplica una regularización adicional con la divergencia KL: 
 
-![[Pasted image 20250123105832.png]]
+![Pasted image 20250123105832.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250123105832.png)
 
 De esta forma, se penaliza que la política cambie bruscamente.
 

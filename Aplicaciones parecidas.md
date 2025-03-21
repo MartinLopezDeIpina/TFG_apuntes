@@ -36,7 +36,7 @@ Lo de explicar funciona bastante bien.
 	Los de Zoekt usan su propio algoritmo de búsqueda, se supone que está optimizado para código fuente.
 	Búsqueda estructurada -> para buscar siguiendo las normas del código, pro ejemplo dentro del print(), da igual si está en 3 líneas la paréntesis, sabe si está balanceado y si está dentro dle print, Usan Comby, parece que no está implementado directamente para hacer búsqeudas indexadas.
 - También utilizan búsqueda con formato LSIF. Los editores de código para realizar tareas de búsqueda / corrección de sintaxis usan protocolo LSP. Se basa en que un engine analiza el código y devuelve un JSON con el formato del código estandarizado, este json es un LSIF. 
-![[Pasted image 20250317205001.png]]
+![Pasted image 20250317205001.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250317205001.png)
 Luego están todos migrando a SCIP, ques es como LSIF pero usa un lenguage de marcado llamado protobuf que se supone que lo hace mucho más ligero y eficiente que el JSON.
 SCIP-cli, para dado un scip hacer varias búsquedas: https://github.com/sourcegraph/scip?tab=readme-ov-file
 SCIP-python, para sacar el fichero scip desde un proyecto: https://github.com/sourcegraph/scip-python

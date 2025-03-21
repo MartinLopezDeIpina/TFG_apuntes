@@ -1,4 +1,4 @@
-![[Pasted image 20250228205357.png]]
+![Pasted image 20250228205357.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250228205357.png)
 
 ## Modelos local
 
@@ -59,13 +59,13 @@ Modo grafo, los pasos del agente son fluir por diferentes nodos.
 -difícil -> más lento desarrollar, para casos simples puede ser sobreingeniería, sólo para casos de investigación, casos nicho.
 
 ### LlamaIndex Workflows
-![[Pasted image 20250310110055.png]]
+![Pasted image 20250310110055.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310110055.png)
 workflows es forma de crear agentes definiendo los pasos.
-![[Pasted image 20250310110436.png]]
+![Pasted image 20250310110436.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310110436.png)
 Bastante parecido a langgraph, hay un estado, se pueden definir condicionales dentro de los steps. Es como un punto medio.
 ### CrewAI
 Tienen interfaz que elimina boilerplate, por ejemplo clase Agent, Task, pensado para interacción entre diferentes agentes (Crew xd) 
-Fácil de hacer, pero deja menos personalización. También se pueden hacer agentes personalizados, pero entonces no tiene sentido usar la librería, más complicado de personalizar. ![[Pasted image 20250310111634.png]]
+Fácil de hacer, pero deja menos personalización. También se pueden hacer agentes personalizados, pero entonces no tiene sentido usar la librería, más complicado de personalizar. ![Pasted image 20250310111634.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310111634.png)
 
 +Fácil de usar, eliminar boilerplate
 -Difícil de personalizar
@@ -76,7 +76,7 @@ Parece más difícil, más personalización que CrewAI.
 
 Da más funcionalidades que LangGraph, code executors, blah, blah. En langgraph eso hay que crearlo.
 
-![[Pasted image 20250310114947.png]]
+![Pasted image 20250310114947.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310114947.png)
 
 ### Smolagents
 Orientado a tareas sencillas, se queda corto al oquestrar muchos agentes.
@@ -85,7 +85,7 @@ Orientado a tareas sencillas, se queda corto al oquestrar muchos agentes.
 +fácil integrar con modelos de huggingface en local
 
 -Se queda corto para tareas complejas
-![[Pasted image 20250310121124.png]]
+![Pasted image 20250310121124.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310121124.png)
 
 ### SwarmAI
 Nuevo, lilbrería "lightweight", todavía está en fase de desarrollo, parece orientado a educación.
@@ -96,7 +96,7 @@ Nuevo, lilbrería "lightweight", todavía está en fase de desarrollo, parece or
 ### Conclusión
 Agentes LLM bastante nuevos, salen frameworks de debajo de las piedras, en general todos la misma estructura agente / tool
 Pa mi que no merece la pena todavía cambiar el framework de la empresa si el año que viene van a salir 5 nuevos o van a cambiar todo.
-![[Pasted image 20250310112250.png]]
+![Pasted image 20250310112250.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250310112250.png)
 Usar LangGraph pal TFG
 
 Espectro boilerplate / personalización

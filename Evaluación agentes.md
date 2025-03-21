@@ -19,7 +19,7 @@ Para evaluar representan las tools y argumentos como árboles. Entonces generan 
 
 ##### API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs
 Dicen que cuando a un LLM se le pasan unas pocas tools se le pueden pasar todas en el prompt, pero que cuando hay unas cuantas es mejor implementar un sistema de retrieval para las tools maś interesantes para la tarea.
-![[Pasted image 20250308125221.png]]
+![Pasted image 20250308125221.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250308125221.png)
 Proponen crear un sistema de agentes para generar datos sobre api calls.
 Manualmente:
 Le dicen a agentes anotadores pasándole APIs random que generen una query que pueda ser resuelta por esa api, la llaman y valoran la respuesta para anotarlo como dato. Para casos de plan + retrieval + call, les pasan las apis y les dicen que generen una query compleja, luego que la dividan en subqueries y cada una la resuelvan con una api. 
@@ -37,6 +37,6 @@ Utilizan anotaciones humanas para evaluar la fiabilidad del evaluador automátic
 ##### RestGPT: Connecting Large Language Models with Real-World RESTful APIs
 Para evaluar el tool calling, en lugar de mirar si predicción es parte del gold, miran si el gold es parte de predicción.
 También proponen métrica solution_len, la cantidad de llamadas adicionales respecto al gold standard.
-![[Pasted image 20250308134215.png]]
+![Pasted image 20250308134215.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250308134215.png)
 
 -OpenAGI: ClipScore y VitScore para evaluar comprensión de imágenes

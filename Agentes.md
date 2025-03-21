@@ -24,7 +24,7 @@ Para planear la task se usa un LLM para planear a alto nivel, como ir a la habti
 -Calypso: usa una memoria a corto plazo con descripciones del estado actual de la partida de d&d
 
 ##### Describe, Explain, Plan and Select: Interactive Planning with Large Language Models Enables Open-World Multi-Task Agents
-![[Pasted image 20250304162831.png]]
+![Pasted image 20250304162831.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250304162831.png)
 La idea es que un planificador dicta las tareas a alto nivel, luego un controlador intenta ejecutar las sub goals de forma secuencial. cuando da error un descriptor devuelve la descripción del error, y un explainer explica por qué ha fallado para que el planificador haga un replan. Comentan que este approach es muy superior a simplemente planear e ir incorporando el feedback.
 El módulo selector se encarga de decidir cuál tarea ejecutar antes. dicen que si la tarea es chopear oak pero hay acacia al lado que el selector tiene que decidir reemplazar la tarea. Tambié, si no hay dependencias entre tareas, que el selector elija la que más cerca o accesible tiene para hacer el agente. El módulo selector es una red neuronal FC que se ha entrenado con varias trayectorias offline, dada otro set de trayerctorias, predice cuál es la mejor, pasándole también las características del estado actual extraídas de una CNN a la que se le han pasado una imagen del juego actual, lo que predice la FC es la cantidad de tiempo que costaría cada goal si fuese la siguiente, y se pasa por un softmax para sacar las probabilidades de cada uno.
 
@@ -33,7 +33,7 @@ Se puede ver el plan actual como la memoria a corto plazo del agente.
 ##### Generative Agents: Interactive Simulacra of Human Behavior
 Desarrollan un entorno con 32 NPCs cada uno con su personalidad / memoria interactuando entre ellos.
 Tienen un banco de memoria, donde se registran observaciones que el agente hace, como x está leyendo un libro, el frigo está vacío...
-![[Pasted image 20250305104031.png]]
+![Pasted image 20250305104031.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250305104031.png)
 A la hora de decidir qué hacer, acceden al banco de memoria con un sistema rag. Cada observación tiene un score que se basa en la media de 3 métricas ponderadas: 
 - Recency, en función de hace cuanto en tiempo del juego sucedió
 - Importance, del 0 al 10 le promptean al LLM para que lo evalue, 0 es lavarse los dientes, 10 es dejarlo con la novia
@@ -53,7 +53,7 @@ Los diálogos son al final observaciones en plan x agente decide hablar con otro
 Otro en el minecraft.
 Es interesante lo de que tienen primero un agente "Decomposer", que dado el objetivo define las subgoals a realizar de forma abstracta. A este le pasan info del knowledge del juego para decidir qué tiene que hacer. Luego estos subgoals se los pasan a un Plannner que tieneacceso a los tools / feedback, además del memory.
 El módulo de memroia dicen que guarda las trazas anteriores, para hacerle un rag en base a cuáles tareas similares a esta que han acabado en éxito existen.
-![[Pasted image 20250305201859.png]]
+![Pasted image 20250305201859.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250305201859.png)
 ##### Reflexion: Language Agents with Verbal Reinforcement Learning
 El mítico tutorial de langgraph basicamente donde evalúa la respuesta y otro genera feedback y se le pasa al actor.
 El actor recibe también memoria corto largo plazo.
@@ -64,7 +64,7 @@ Proponen un Memory controller, que es un agente que con un prompt decide si es n
 Al acceder a la memoria se devuelve, el flash memory, que son los mensajes anteriores, y activatoin memory, que se extraen usando un rag por 2 métricas, la similitud y hace cuanto se generaron.
 Las memorias contienen obseración (input del usuario), la respuesta del sistema y el embedding.
 
-![[Pasted image 20250305123526.png]]
+![Pasted image 20250305123526.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250305123526.png)
 #interesante,es bastante sencillo,  como combina la memoria a largo y corto plazo. Lo del controlador de memoria también está bien, para decidir si es o no necesario acceder a memoria conversacional. Se podría implementar esto únicamente para memoria conversacional, no para el RAG de las docs.
 
 ##### MemoryBank: Enhancing Large Language Models with Long-Term Memory
@@ -72,7 +72,7 @@ Dicen que según la ley de olvido de Ebbinghaus Forgetting curve theory los huma
 Añaden un timestamp a cada objeto de memoria para facilitar actualización.
 Crean una jerarquía de memoria en la que entiendo que cuanto más distante más abstracto es el resumen de las memorias.
 Las memorias se acceden usando RAG.
-![[Pasted image 20250305143724.png]]
+![Pasted image 20250305143724.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250305143724.png)
 dicen que la importancia para retener esa información esté definida por t (el tiempo desde que se guardó esa memoria), y s (la importancia que tiene), s dicen deinicializarlo a 1 y cada vez que se accede a esa memoria sumarle 1. 
 
 #### Formatos de memoria
@@ -105,7 +105,7 @@ Utilizan varios agentes:
 #### Operaciones en memoria
 
 - Lectura de memoria: Lo de tener eRQ4: The Effect of Interactionn cuenta recency, relevance e importancia -> esto 100% meterlo #todo
-![[Pasted image 20250305202453.png]]
+![Pasted image 20250305202453.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250305202453.png)
 - Escritura en memoria: 
 -GITLM -> se guardan las acciones exitosas en la memoria para cada goal. Cuando llegan a 5 se agregan usando un LLM para resumir.
 ##### Memory Augmented Large Language Models are Computationally Universal
@@ -129,16 +129,16 @@ Luego hacen un ajuste fino del agente con las experiencias anteriores.
 - planning sin feedback:
 
 ##### Planning with Large Language Models via Corrective Re-prompting
-![[Pasted image 20250306095451.png]]
+![Pasted image 20250306095451.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306095451.png)
 Proponen, que LLM generativo decida qué hacer en el siguiente paso, pasarlo por un clasificador (RoBERTa) para que de la siguiente acción. Luego lo pasan por un módulo que chequea si la acción es posible (han creado sus propias rules), si gneera un error, se le pasa a un módulo de prompting (otro LLM), que decide lo que está mal, egnera una propuesta para reemplazar y lo pasan otra vez por el clasificador. #interesante, lo de que te de error con reglas y luego feedback está muy bien, no se si se podría aplicar en el TFG, pq no se si hay una environment con unas reglas fijas. Lo de clasificar al salida del LLM no se yo, osea al final le puedes pasar al LLM las tools directamente y no tienes que entrenar el clasificador. Supongo que un una tarea muy específica podría funcoinar mejor.
 Definen 3 niveles de dar feedback, diciendo el error y ya está, dando la acción que ha fallado con el objeto relacionado, dando la acción, el objeto y la razón por la que ha fallado. dicen que la mejor depende de la capacidad del LLM que genera el feedback del error.
 En los entornos en los que no hay unas reglas directamente definidas (full NLP), proponen medir si la acción es correcta o no mediante una combinación del log-likelihood y el cosine similarity (no sé yo si esto va muy bien):
-![[Pasted image 20250306100809.png]]
+![Pasted image 20250306100809.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306100809.png)
 También proponen re-sampling: cuando falla una acción, pasar al Roberta y pillar las k acciones más probables en base a la ecuación anterior e ir probando.
 
 ##### ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models
 Dicen que los agentes ReAct gastan muchos tokens en el proceso de observación, proponen saltarse esta parte. Entonces un agente primero genera un plan cno los diferentes workers a los que va a llamar, los workers hacen su movida y luego un solver coge todas las soluciones y resuelve el problema.
-![[Pasted image 20250306101954.png]]
+![Pasted image 20250306101954.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306101954.png)
 Argumentan que es más efectivo ajustar su planner que el agente react, ya que este se ajusta para el think - action - observation con las tools integradas, las observaciones dependen de las tools específicas que se estśen usando para eje ejemplo. En cambio el planner pues no usa tools específicas del ejemplo, osea en lugar de las tools y sus observaciones esepcíficas se expone a los workers y sus tareas, es como un razonamiento más abstracto. 
 
 ##### S WIFT S AGE : A Generative Agent with Fast and Slow Thinking for Complex Interactive Tasks
@@ -150,12 +150,12 @@ Dicen que luego le pasan el plan a un grounder para que genere el plan ejecutabl
 Dicen de utilizar el agente lento cuando: no obtiene una reward en 5 pasos (reward como una forma de evaluar el progreso en la tarea, la proporcoina el environment, un poco ambigüo esto, supongo que depende de la tarea específica), la acción es inválida, la acción es crítica (por ejemplo la solución al problema), la obsevación de la acción es inesperada.
 
 ##### SELF-CONSISTENCY IMPROVES CHAIN OF THOUGHT REASONING IN LANGUAGE MODELS
-![[Pasted image 20250306114205.png]]
+![Pasted image 20250306114205.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306114205.png)
 Basicamente varias ejecuciones paralelas para lo mismo con temp alta y quedarse con la respuesta más frecuente. 
 #interesante, entiendo que se podría añadir a otro agente de forma sencilla.
 
 ##### Tree of Thoughts: Deliberate Problem Solving with Large Language Models
-![[Pasted image 20250306115028.png]]
+![Pasted image 20250306115028.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306115028.png)
  #interesante, se podría valorar en algún lado pero muy costoso y supongo que difícil de evaluar.
 El ToT es crear un árbol con cada nodo como un pensamiento. Las implementaciones específicas deben definir lo siguiente: 
 - cómo descomponer los pensamientos -> depende el caso pueden ser unas pocas palabras
@@ -165,12 +165,12 @@ El ToT es crear un árbol con cada nodo como un pensamiento. Las implementacione
 
 ##### RecMind: Large Language Model Powered Agent For Recommendation
 Proponen una modificación al ToT para que los estados tengan la ifnormación de todos los estados anteriores, independientemente de si fueron descartados, porque se suopne que podrían tener información útil.
-![[Pasted image 20250306122004.png]]
+![Pasted image 20250306122004.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306122004.png)
 Tenerlo en cuenta si hago algo de ToT / self-consistency
 
 ##### Graph of Thoughts: Solving Elaborate Problems with Large Language Models
 El código está público, se puede usar en forma de librería para hacer una implemetnación rápida.
-![[Pasted image 20250306125000.png]]
+![Pasted image 20250306125000.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250306125000.png)
 Proponen representar el razonamiento del LLM en forma de grafo: Los vértices son soluciones a problemas intermedios / finales, mientras que los edges son relaciones de input para la siguiente solución: t1 - t2 -> entonces el input de t2 contiene el output de t1. También cada V puede pertenecer a una clase específica, por ejemplo si se quiere escribir párrafos, ponen el ejemplo de que los vértices puedan ser de tipo planear escritura o escritura de párrafo.
 Luego proponen transformaciones sobre el grafo, que es ir añadiendo o modificando vértices para por ejemplo resumir:
 - Agregar -> desde varias cadenas de pensamiento pasar a una con los edges, entonces se supone que se combinan sus puntos fuertes eliminando las desventajas.
@@ -208,7 +208,7 @@ Calculan el reward de cada deducción com la log probabilidad del modelo y aplic
 - Planeadores externos:
   
 ##### LLM+P: Empowering Large Language Models with Optimal Planning Proficiency
-![[Pasted image 20250307102828.png]]
+![Pasted image 20250307102828.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307102828.png)
 Proponen primero definir el entorno en un formato PDDL. 
 Le pasan al LLM la descripción del entorno y el problema, este tiene que definir la descripción del problema en formato PDDL.
 Luego un solver PDDL crea el plan para resolver el problema en formato PDDL.
@@ -218,12 +218,12 @@ Al final el LLM es solo como el traductor, es como automatizar el proceso de cre
 #interesante, supongo que debe funcionar muy bien para ese tipo de tareas.
 #####  Dynamic Planning with a LLM
 Proponen extender el anterior para que el LLm en lugar de ser únicamente el traductor participe activamente en el plan generando observaciones.
-![[Pasted image 20250307111008.png]]
+![Pasted image 20250307111008.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307111008.png)
 
 
 ##### BUILDING COOPERATIVE EMBODIED AGENTS MODULARLY WITH LARGE LANGUAGE MODELS
 Dividen el módulo de memoria en semantic (knowledge del entorno), episodic (episodios pasados), procedural (cómo realizar acciones específicas) -> #todo, en varios otros papers también usan una separación similar. entiendo qeu el knowledge del entorno podría ser la docs del proyecto, pero lo interesante es que se podría separar la memoria en acciones pasadas y el módulo de largo plazo como tal, osea tener el módulo de largo plazo con la búsqueda RAG por ideas comprimidas, y luego se podría buscar para few shots ejemplos exitosos anteriores.
-![[Pasted image 20250307113541.png]]
+![Pasted image 20250307113541.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307113541.png)
 
 Perception module: pasarle el estado actual, ellos usan una CNN para pasarle info visual
 communication module: podría ser el agente usando tools para obtener info relevante 
@@ -248,7 +248,7 @@ Interesante de planning es que en su flujo proponen 3 tipos de feedback:
 ##### LLM-Planner: Few-Shot Grounded Planning for Embodied Agents with Large Language Models
 Proponen de nuevo hacer un plan a alto nivel y luego uno a bajo nivel. Para el alto nivel usan few shots con RAG y logit biases (añadir un sesgo positivo a los logits de los tokens presentes en el enunciado para que sea más probable que salgan, creo que el api de openai deja hacer esto, entonces como en el prompt le ponen los posibles objetos y acciones funciona mejor)
 Proponen que entre high y low level planning haya un replanning si el loop en el low level con su porpio feedback falla demasiado.
-![[Pasted image 20250307122329.png]]
+![Pasted image 20250307122329.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307122329.png)
 #todo: muy interesante, habría que definir un loop de feedback entre el low-level y el entorno respecto las acciones ejecutadas. Luego, tras fallar x veces se podría generar un resumen con los x fallos de qué está pasando, y pasar al high level planner para que razone y genere el plan de nuevo desde el paso actual.
 
 ##### Inner Monologue: Embodied Reasoning through Planning with Language Models
@@ -260,7 +260,7 @@ Esto lo internan en un bucle cerrado en el que el agente va ejecutando acciones 
 
 - Feedback proporcionado por el propio modelo: 
 ##### SELF-REFINE: Iterative Refinement with Self-Feedback
-![[Pasted image 20250307125953.png]]
+![Pasted image 20250307125953.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307125953.png)
 Proponen parecido a reflexion, 3 LLMs, uno genera otro critica con feedabck y el otro refina la respuesta.
 Podría estar bien incorporar algo de esto o Reflexion en alguno de los módulos, pero habría que tener cuidado con no solapar los modelos razonadores.
 
@@ -271,7 +271,7 @@ Dicen que preguntarle al LLM directamente de que diga si está bien o no, aunque
 - Se le pide a otro LLM sin ahber visto el step original, pasándole la pregunta, steps e info relevante que genere un step nuevo.
 - Comparación de resultados: promptear para ver si un step es complementario o contradictorio al otro.
 Luego si contradice le ponen multiplicador -1, si no está relacionado 0, y si lo complementa 0, así sacan un confidence score de qué tan buena es la solución:
-![[Pasted image 20250307144032.png]]
+![Pasted image 20250307144032.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250307144032.png)
 No se mencoina, pero supongo que también se podría usar la log probabilidad multiplicada por estos.
 #interesante, pero no sé hasta que punto es esto mejor que simplemente un self-consistency para cada nivel de step, osea al final se está haciendo un self consistency pero con varias llamadas que lo hace más caro. Quizás se podría incorporar a la hora de hacer el plan esta estrategia de forma paralela por varios, y aplicar la fórmula? #todo
 
@@ -295,7 +295,7 @@ Todos los agentes con estilo ReAct, con sus tools específicas.
 
 Dicen que a diferencia de ChatDev (el anterior), ellos definen una interfaz de comunicación entre los agentes de forma estructurada, porque dicen que con lenguaje natural pasa lo del teléfono descacharrado.
 En lugar de comunicarse directamente los agentes uno a uno, utilizan un pool de mensajes, para facilitar la coordinación. Para no haber information overload, implementan un sistema publisher-subscriber, en el que a cada agente solo se le notifica cuando hay un mensaje del tipo que a él le interesa. 
-![[Pasted image 20250308105425.png]]
+![Pasted image 20250308105425.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250308105425.png)
 #todo, el sistema por roles es muy interesante y curioso. Entiendo que lo más efectivo y avanzado sería implementar un sistema de estos y luego dentro de cada agente estrategias de planificación / memoria / rag, de los agentes anteriores. Esto sería lo más efectivo, pero no sé si igual es demasiado difícil pal TFG.
 Se podría implementar el pool para que los diferentes agentes investigadores de información vayan buscando info y sacando conclusiones de forma paralela cada uno en su fuente de información.
 Habría que buscar un SOP para el caso del TFG.
@@ -329,7 +329,7 @@ Utilzan chatgpt para aumentar los datos de entrenamiento de llamadas a la api, p
 El proceso de entrenamiento es como en los demás de entrenar agentes. Se les pasa trazas de ejemplo donde se ejecutan las tools, para que el modelo aprenda dónde ejecutar las tools, cuáles ejecutar en cada momento y con qué argumentos ejecutarlas.
 También se incluyen datos de entrenamiento QA sobfre las propiedades de los grafos para que el modelo aprenda a utilizarlos. Los datos orginales entiendo que eran enmascarando las llamadas que el modelo tiene que hacer con un token especial.
 Cuando se incluye -> en la salida del modelo significa que la salida de la tool call debe incluirse en la salida del modelo, en lugar de ejecutarse solo en el backend.
-![[Pasted image 20250304142628.png]]
+![Pasted image 20250304142628.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250304142628.png)
 Se usan varios "hubs" que son como bases de datos con información del sistema.
 -está el graph data hub que son las bases de datos para las funcoinalidades avanzadas, en el caso de los papers usan el BERT GNN para acceder a los datos, aquí es donde el modelo con la directiva GL puede añadir los datos, tiene más sentido cuando no se utiliza una base de datos ya creada.
 -en el graph task hub están las tareas hard-codeadas de qué hacer en cada una. Esta llama a las sub tareas del praph model hub, las que usan los modelos bert graph para las tareas específicas.
@@ -352,14 +352,14 @@ Lo mismo que el anterior, pero usan RL con PPO para mejorar el planner.
 -MM-React -> más o menos lo mismo, agente react con tools de visión por computador.
 
 ##### User Behavior Simulation with Large Language Model based Agents
-![[Pasted image 20250308173202.png]]
+![Pasted image 20250308173202.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250308173202.png)
 3 tipos de memoria: 
 - sensory memory -> observaciones el entorno resumidos con LLM (supongo que cada sentence se pasa a un LLM para que saque las observaciones). Se les pone un score de qué tan importantes son + score timestamp.
 - short term memory -> si un agente se encuentra varias veces con memorias parecidas en short-memory, pasan a long-term memory. Se añade Mi a M, si se añade otro Mi con similiaridad de coseno pasando cierto umbral, entonces se dice que ese Mi enhancea al otro, se añade a su grupo. Luego cuando hay k de ese grupo, se pasan por un LLM para que se añadan a long term.
 - long term memory -> se puede aplicar reflexión sobre estos.
 Hablan de ponerle personalidades al perfil del agente. Igual si le digo de acutar de diferente forma a cada agente, hay resultados más variados.
 Fórmula para calcular olvido, la exponencial en el beta hace que las memorias más recientes sean más propensas a ser olvidadas:
-![[Pasted image 20250309101146.png]]
+![Pasted image 20250309101146.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250309101146.png)
 Al acceder a memoria se incluyen, top k de long term memory y todas de short-term memory.
 La reflexión en la memoria de largo plazo es generar ideas abstractas, Usan misma estrategia que Generative agents para resumir la info.
 Le pasan profile / memory / instruction / context (del entorno)
@@ -372,7 +372,7 @@ Multipican probabilidad de LLM (say) con prbabilidad de RL (can) de cada acción
 -RoCo -> también hacen lo de incorporar el feedback al prompt del agente.
 
 ##### PREFER: Prompt Ensemble Learning via Feedback-Reflect Refine
-![[Pasted image 20250309113725.png]]
+![Pasted image 20250309113725.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250309113725.png)
 Parten de un prompt base para resolver una tarea. Se le pasan al agente queries de entrenamiento, cuando el ejemplo es difícil y el agetne falla se pasa por un reflector con acceso al ground truth que genera feedback. Este feedback se utiliza por un refinador que retoca el prompt para mejorarlo en la tarea.
 Al tener un conjunto de prompts, se ejecuta la tarea con varios agentes paralelos, los cuales cada uno generan una respuesta.
 Una vez varias respuestas, se pide al LLM que evalue cada respuesta hacia delante (diciendole a ver qué tan buena es la respuesta) y hacia atrás (diciendo a ver qué tan mala es la respuesta -> pidiendole contra argumentos), entonces se resta una con la otra y se obtiene el score de la respuesta, se elige el mejor.

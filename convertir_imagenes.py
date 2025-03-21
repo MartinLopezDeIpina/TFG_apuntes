@@ -18,7 +18,7 @@ def convertir_obsidian_a_md(archivo_md, carpeta_imagenes="https://github.com/Mar
         f.write(nuevo_contenido)
 
 # Aplicar a todos los archivos en un directorio
-directorio_md = "/home/martin/TFG_apuntes"
+directorio_md = "/home/martin/TFG_apuntes/cursos_juanan"
 for archivo in os.listdir(directorio_md):
     if archivo.endswith(".md"):
         convertir_obsidian_a_md(os.path.join(directorio_md, archivo))

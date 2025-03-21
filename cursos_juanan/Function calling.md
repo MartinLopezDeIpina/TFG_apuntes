@@ -1,5 +1,5 @@
 
-![[Pasted image 20241022124039.png]]
+![Pasted image 20241022124039.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020241022124039.png)
  En el function calling, se le manda al LLM un prompt y unas utilidades (funciones). Entonces, si el LLM decide que tiene que llamar a una función, su output contiene el nombre de la función y los argumentos, y luego se le pasa de nuevo al modelo (eso lo gestiona el programador) -> lo del ReAct agent.
 
 Lo del soporte para funciones es que los proveedores como OpenAI añaden la absracción de function calling, osea que tu le pones al modelo las funciones y este ya te da la salida de forma estructurada. También ha sido finetuneado para que entienda eso de puta madre. Se supone que se puede hacer manualmente con pydantic y LangChain.

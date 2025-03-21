@@ -80,7 +80,7 @@ Para tracear se puede definir en LangGraph lo que se detecta y lo que no.
 - Rutas correctas?
 
 
-![[Pasted image 20250221172110.png]]
+![Pasted image 20250221172110.png](https://github.com/MartinLopezDeIpina/TFG_apuntes/blob/master/Imagenes/Pasted%20image%2020250221172110.png)
 Crear varias querys similares y definir optimal path -> evaluar el porcentaje de veces que entra en ese rango.
 
 ### Evaluate development
